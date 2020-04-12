@@ -160,6 +160,9 @@ class AccountMenuCtrl extends PureCtrl {
     );
     const hasError = !response || response.error;
     if (!hasError) {
+      this.setFormDataState({
+        user_password: null
+      });
       await this.onAuthSuccess();
       this.syncManager.unlockSyncing();
       this.syncManager.sync({ performIntegrityCheck: true });
@@ -167,7 +170,7 @@ class AccountMenuCtrl extends PureCtrl {
     }
     this.syncManager.unlockSyncing();
     await this.setFormDataState({
-      status: null,
+      status: null
     });
     const error = response
       ? response.error
@@ -505,6 +508,15 @@ class AccountMenuCtrl extends PureCtrl {
     } else {
       run();
     }
+  }
+
+  hidePasswordForm() {
+    this.setFormDataState({
+      showLogin: false,
+      showRegister: false,
+      user_password: null,
+      password_conf: null
+    });
   }
 
   hasPasscode() {
